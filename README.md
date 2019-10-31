@@ -1,3 +1,12 @@
+# rigid-rotate
+
+This is a web-app for aligning two sets of points using a rigid rotation. It
+can be used to bootstrap the phathom-rigid-rotate command with some initial
+values.
+
+## React create-react-app details below
+
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts

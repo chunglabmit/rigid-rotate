@@ -42,56 +42,75 @@ export default class App extends React.Component {
   render() {
     return (
       <div className="App">
-        <header className="App-header">
-          <a
-            className="App-link"
-            href="https://github.com/chunglabmit/rigid-rotate"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Rigid-rotate on Github
-          </a>
-          <div>
-            xr={(this.state.cameraState.rotation.x * 180 / 3.14159).toFixed(0)},
-            yr={(this.state.cameraState.rotation.y * 180 / 3.14159).toFixed(0)},
-            zr={(this.state.cameraState.rotation.z * 180 / 3.14159).toFixed(0)}
-          </div>
-        </header>
         <div>
-          <Coords
-            name="fixed"
-            onCoords={ data=>this.onFixedCoords(data) }
-            />
-          <Coords
-            name="moving"
-            onCoords={ data=>this.onMovingCoords(data) }
-            />
-          <PointCloudViewer
-            key={[this.state.idx,
-                  this.state.movingState.offset.x,
-                  this.state.movingState.offset.y,
-                  this.state.movingState.offset.z,
-                  this.state.movingState.rotation.x,
-                  this.state.movingState.rotation.y,
-                  this.state.movingState.rotation.z,
-                  this.state.movingState.center.x,
-                  this.state.movingState.center.y,
-                  this.state.movingState.center.z,
-                  this.state.movingState.scale.x,
-                  this.state.movingState.scale.y,
-                  this.state.movingState.scale.z
-                 ]}
-            moving_coords = {this.state.moving_coords}
-            fixed_coords = {this.state.fixed_coords}
-            radius={ 5 }
-            cameraState={this.state.cameraState}
-            movingState={this.state.movingState}
-            onCameraChange={ state=>this.onCameraChange(state) }
-            ref={ this.pcv } />
+          <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <a class="navbar-brand" href="https://github.com/chunglabmit/rigid-rotate">
+              Rigid Rotate
+            </a>
+            <button
+               class="navbar-toggler"
+               type="button"
+               data-toggle="collapse"
+               data-target="#navbarSupportedContent"
+               aria-controls="navbarSupportedContent"
+               aria-expanded="true"
+               aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+              <ul class="navbar-nav">
+                <li class="nav-item active">
+                  <a class="nav-link" href="#">Home</a>
+                </li>
+                <form class="form-inline">
+                  <div class="form-control">
+                    <Coords
+                      name="fixed"
+                      onCoords={ data=>this.onFixedCoords(data) }
+                      />
+                      <Coords
+                        name="moving"
+                        onCoords={ data=>this.onMovingCoords(data) }
+                        />
+                    </div>
+                </form>
+              </ul>
+            </div>
+          </nav>
+          <div class="container-fluid">
+            <div class="row">
+              <div class="col-sm-4 col-md-3 col-lg-2">
+                <Transform
+                  transform={ this.state.movingState }
+                  onChange={ state=>this.onMovingChange(state)} />
+              </div>
+              <div class="col-sm-8 col-md-9 col-lg-10">
+                <PointCloudViewer
+                  key={[this.state.idx,
+                        this.state.movingState.offset.x,
+                        this.state.movingState.offset.y,
+                        this.state.movingState.offset.z,
+                        this.state.movingState.rotation.x,
+                        this.state.movingState.rotation.y,
+                        this.state.movingState.rotation.z,
+                        this.state.movingState.center.x,
+                        this.state.movingState.center.y,
+                        this.state.movingState.center.z,
+                        this.state.movingState.scale.x,
+                        this.state.movingState.scale.y,
+                        this.state.movingState.scale.z
+                       ]}
+                  moving_coords = {this.state.moving_coords}
+                  fixed_coords = {this.state.fixed_coords}
+                  radius={ 5 }
+                  cameraState={this.state.cameraState}
+                  movingState={this.state.movingState}
+                  onCameraChange={ state=>this.onCameraChange(state) }
+                  ref={ this.pcv } />
+              </div>
+            </div>
+          </div>
         </div>
-        <Transform
-          transform={ this.state.movingState }
-          onChange={ state=>this.onMovingChange(state)} />
       </div>
     );
   }

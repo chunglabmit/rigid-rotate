@@ -7,16 +7,19 @@ var defaultOnCoords = (data) => {}
 export class Coords extends React.Component {
   render() {
     return (
-    <Dropzone onDrop={acceptedFiles=> this.onDrop(acceptedFiles)}>
-    {({getRootProps, getInputProps}) => (
-        <section>
-          <div {...getRootProps()}>
-            <input {...getInputProps()} />
-            <p>Drop {this.props.name} coordinates file here</p>
-          </div>
-        </section>
-      )}
-    </Dropzone>
+      <button>
+      <Dropzone onDrop={acceptedFiles=> this.onDrop(acceptedFiles)}>
+      {({getRootProps, getInputProps}) => (
+          <section>
+            <div {...getRootProps()}>
+              <input {...getInputProps()} />
+              Drop {this.props.name} coordinates file here or click to pick
+              files
+            </div>
+          </section>
+        )}
+      </Dropzone>
+      </button>
   )
   }
   onDrop(acceptedFiles) {

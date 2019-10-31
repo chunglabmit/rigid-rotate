@@ -34,35 +34,52 @@ class Triple extends React.Component {
   render() {
     return(
       <div class="row">
-      <div class="col-sm-4 col-md-4 col-lg-4">
-          <Form.Group controlID={ this.props.name + "X"}>
-            <Form.Label>X {this.props.name}</Form.Label>
-            <Form.Control
-              type="text"
-              name={ this.props.name + "X"}
-              value={this.state.xtext }
-              onChange={ event=>this.handleChange(event, "x")} />
-          </Form.Group>
-        </div>
-        <div class="col-sm-4 col-md-4 col-lg-4">
-          <Form.Group controlID={ this.props.name + "Y"}>
-            <Form.Label>Y {this.props.name}</Form.Label>
-            <Form.Control
-              type="text"
-              name={ this.props.name + "Y"}
-              value={this.state.ytext }
-              onChange={ event=>this.handleChange(event, "y")} />
-          </Form.Group>
-          </div>
-          <div class="col-sm-4 col-md-4 col-lg-4">
-          <Form.Group controlID={ this.props.name + "Z"}>
-            <Form.Label>Z {this.props.name}</Form.Label>
-            <Form.Control
-              type="text"
-              name={ this.props.name + "Z"}
-              value={this.state.ztext }
-              onChange={ event=>this.handleChange(event, "z")} />
-          </Form.Group>
+        <div class="col-sm-12 col-md-12 col-lg-12">
+          <div class="card">
+            <div class="card-body">
+              <div class="card-title"> {this.props.name} </div>
+                <div class="container-fluid">
+                  <form>
+                    <div class="form-group form-inline">
+                      <label
+                       for={ this.props.name + "X"}
+                       >X:</label>&nbsp;
+                      <input
+                        class="form-control"
+                        type="text"
+                        size="2"
+                        name={ this.props.name + "X"}
+                        value={this.state.xtext }
+                        onChange={ event=>this.handleChange(event, "x")}/>
+                    </div>
+                    <div class="form-group form-inline">
+                      <label
+                       for={ this.props.name + "Y"}
+                       >Y:</label>&nbsp;
+                      <input
+                        class="form-control"
+                        type="text"
+                        size="2"
+                        name={ this.props.name + "Y"}
+                        value={this.state.ytext }
+                        onChange={ event=>this.handleChange(event, "y")}/>
+                    </div>
+                    <div class="form-group form-inline">
+                      <label
+                       for={ this.props.name + "Z"}
+                       >Z:</label>&nbsp;
+                      <input
+                        class="form-control"
+                        type="text"
+                        size="2"
+                        name={ this.props.name + "Z"}
+                        value={this.state.ztext }
+                        onChange={ event=>this.handleChange(event, "z")}/>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
         </div>
       </div>
     )
@@ -118,40 +135,38 @@ export class Transform extends React.Component {
   }
   render() {
     return(
-      <Form>
-        <div class="container-fluid small">
-          <Triple
-           name="offset"
-           x = { this.props.transform.offset.x }
-           y = { this.props.transform.offset.y }
-           z = { this.props.transform.offset.z }
-           onChange = { state => this.handleChange(state, "offset") }
-           />
-          <Triple
-            name="center"
-            x = { this.props.transform.center.x }
-            y = { this.props.transform.center.y }
-            z = { this.props.transform.center.z }
-            onChange = { state => this.handleChange(state, "center")}
-          />
-          <Triple
-            name="rotation"
-            x = { this.props.transform.rotation.x }
-            y = { this.props.transform.rotation.y }
-            z = { this.props.transform.rotation.z }
-            multiplier = { 180 / 3.1415926 }
-            onChange = { state=>this.handleChange(state, "rotation")}
-          />
-          <Triple
-            name="scale"
-            x = { this.props.transform.scale.x }
-            y = { this.props.transform.scale.y }
-            z = { this.props.transform.scale.z }
-            onChange = { state=>this.handleChange(state, "scale")}
-          />
+      <div class="container-fluid small">
+        <Triple
+         name="offset"
+         x = { this.props.transform.offset.x }
+         y = { this.props.transform.offset.y }
+         z = { this.props.transform.offset.z }
+         onChange = { state => this.handleChange(state, "offset") }
+         />
+        <Triple
+          name="center"
+          x = { this.props.transform.center.x }
+          y = { this.props.transform.center.y }
+          z = { this.props.transform.center.z }
+          onChange = { state => this.handleChange(state, "center")}
+        />
+        <Triple
+          name="rotation"
+          x = { this.props.transform.rotation.x }
+          y = { this.props.transform.rotation.y }
+          z = { this.props.transform.rotation.z }
+          multiplier = { 180 / 3.1415926 }
+          onChange = { state=>this.handleChange(state, "rotation")}
+        />
+        <Triple
+          name="scale"
+          x = { this.props.transform.scale.x }
+          y = { this.props.transform.scale.y }
+          z = { this.props.transform.scale.z }
+          onChange = { state=>this.handleChange(state, "scale")}
+        />
 
-        </div>
-      </Form>
+      </div>
     )
   }
   handleChange(state, object_name) {
