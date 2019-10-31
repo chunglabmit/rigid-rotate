@@ -62,18 +62,18 @@ export default class App extends React.Component {
                 <li class="nav-item active">
                   <a class="nav-link" href="#">Home</a>
                 </li>
-                <form class="form-inline">
-                  <div class="form-control">
+                <li>
                     <Coords
                       name="fixed"
                       onCoords={ data=>this.onFixedCoords(data) }
                       />
+                  </li>
+                  <li>
                       <Coords
                         name="moving"
                         onCoords={ data=>this.onMovingCoords(data) }
                         />
-                    </div>
-                </form>
+                    </li>
               </ul>
             </div>
           </nav>

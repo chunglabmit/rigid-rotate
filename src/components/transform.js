@@ -42,7 +42,7 @@ class Triple extends React.Component {
                   <form>
                     <div class="form-group form-inline">
                       <label
-                       for={ this.props.name + "X"}
+                       htmlFor={ this.props.name + "X"}
                        >X:</label>&nbsp;
                       <input
                         class="form-control"
@@ -54,7 +54,7 @@ class Triple extends React.Component {
                     </div>
                     <div class="form-group form-inline">
                       <label
-                       for={ this.props.name + "Y"}
+                       htmlFor={ this.props.name + "Y"}
                        >Y:</label>&nbsp;
                       <input
                         class="form-control"
@@ -66,7 +66,7 @@ class Triple extends React.Component {
                     </div>
                     <div class="form-group form-inline">
                       <label
-                       for={ this.props.name + "Z"}
+                       htmlFor={ this.props.name + "Z"}
                        >Z:</label>&nbsp;
                       <input
                         class="form-control"
