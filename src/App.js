@@ -1,10 +1,13 @@
 import React from 'react';
+import {Tabs, Tab} from 'react-bootstrap-tabs'
 import logo from './logo.svg';
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {Coords} from './components/coords'
 import {PointCloudViewer} from './components/pointcloud_viewer'
+import {VolumeViewer} from './components/volumeviewer'
 import {Transform} from './components/transform'
+import {UrlButton} from './components/url'
 
 export default class App extends React.Component {
   constructor() {
@@ -14,29 +17,47 @@ export default class App extends React.Component {
       moving_coords:[[20.0, 20.0, 20.0]],
       fixed_coords:[[20.0, 20.0, 20.0]],
       idx:1,
-      cameraState: PointCloudViewer.defaultProps.cameraState,
-      movingState: PointCloudViewer.defaultProps.movingState
+      pcCameraState: PointCloudViewer.defaultProps.cameraState,
+      volCameraState: VolumeViewer.defaultProps.cameraState,
+      movingState: PointCloudViewer.defaultProps.movingState,
+      selectedTab: 0,
+      movingURL: VolumeViewer.defaultProps.movingURL,
+      fixedURL: VolumeViewer.defaultProps.fixedURL
     }
   }
 
-  onCameraChange(state) {
-    this.setState({
-      moving_coords:this.state.moving_coords,
-      fixed_coords:this.state.fixed_coords,
-      idx:this.state.idx,
-      cameraState:state,
-      movingState:this.state.movingState
-    })
-  }
-
-  onMovingChange(state) {
-    this.setState({
+  changeState(key, value) {
+    var state = {
       moving_coords:this.state.moving_coords,
       fixed_coords:this.state.fixed_coords,
       idx:this.state.idx,
       cameraState:this.state.cameraState,
-      movingState:state
-    })
+      movingState:this.state.movingState,
+      selectedTab:this.state.selectedTab,
+      movingURL:this.state.movingURL,
+      fixedURL:this.state.fixedURL
+    }
+    state[key] = value
+    this.setState(state)
+  }
+  onTabChange(tab) {
+    this.changeState("selectedTab", tab)
+  }
+  onPCCameraChange(state) {
+    this.changeState("pcCameraState", state)
+  }
+  onVolCameraChange(state) {
+    this.changeState("volCameraState", state)
+  }
+
+  onMovingChange(state) {
+    this.changeState("movingState", state)
+  }
+  onMovingURLChange(state) {
+    this.changeState("movingURL", state)
+  }
+  onFixedURLChange(state) {
+    this.changeState("fixedURL", state)
   }
 
   render() {
@@ -58,22 +79,42 @@ export default class App extends React.Component {
               <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
-              <ul class="navbar-nav">
+              <ul class="nav nav-tabs">
                 <li class="nav-item active">
                   <a class="nav-link" href="#">Home</a>
                 </li>
                 <li>
-                    <Coords
-                      name="fixed"
-                      onCoords={ data=>this.onFixedCoords(data) }
-                      />
+                  <div class="mx-3">
+                  <Coords
+                    name="fixed"
+                    onCoords={ data=>this.onFixedCoords(data) }
+                    />
+                  </div>
                   </li>
                   <li>
-                      <Coords
-                        name="moving"
-                        onCoords={ data=>this.onMovingCoords(data) }
-                        />
-                    </li>
+                    <div class="mx-3">
+                    <Coords
+                      name="moving"
+                      onCoords={ data=>this.onMovingCoords(data) }
+                      />
+                    </div>
+                  </li>
+                  <li>
+                    <div class="mx-3">
+                    <UrlButton
+                      url={ this.state.fixedURL}
+                      name="fixed"
+                      onURLChange={ (url)=>this.onFixedURLChange(url)} />
+                    </div>
+                  </li>
+                  <li>
+                    <div class="mx-3">
+                    <UrlButton
+                      url={ this.state.movingURL}
+                      name="moving"
+                      onURLChange={ (url)=>this.onMovingURLChange(url)} />
+                    </div>
+                  </li>
               </ul>
             </div>
           </nav>
@@ -85,8 +126,12 @@ export default class App extends React.Component {
                   onChange={ state=>this.onMovingChange(state)} />
               </div>
               <div class="col-sm-8 col-md-9 col-lg-10">
-                <PointCloudViewer
-                  key={[this.state.idx,
+                <Tabs
+                  onSelect={ (tab) => this.onTabChange(tab)}
+                  selected={ this.state.selectedTab}>
+                  <Tab label="Volume">
+                    <VolumeViewer
+                      key={[this.state.idx,
                         this.state.movingState.offset.x,
                         this.state.movingState.offset.y,
                         this.state.movingState.offset.z,
@@ -98,15 +143,41 @@ export default class App extends React.Component {
                         this.state.movingState.center.z,
                         this.state.movingState.scale.x,
                         this.state.movingState.scale.y,
-                        this.state.movingState.scale.z
-                       ]}
-                  moving_coords = {this.state.moving_coords}
-                  fixed_coords = {this.state.fixed_coords}
-                  radius={ 5 }
-                  cameraState={this.state.cameraState}
-                  movingState={this.state.movingState}
-                  onCameraChange={ state=>this.onCameraChange(state) }
-                  ref={ this.pcv } />
+                        this.state.movingState.scale.z,
+                        this.state.movingURL,
+                        this.state.fixedURL
+                      ]}
+                      fixedURL={this.state.fixedURL}
+                      movingURL={this.state.movingURL}
+                      cameraState={this.state.volCameraState}
+                      movingState={this.state.movingState}
+                      onCameraChange={ state=>this.onVolCameraChange(state) }/>
+                  </Tab>
+                  <Tab label="Point Cloud">
+                    <PointCloudViewer
+                      key={[this.state.idx,
+                            this.state.movingState.offset.x,
+                            this.state.movingState.offset.y,
+                            this.state.movingState.offset.z,
+                            this.state.movingState.rotation.x,
+                            this.state.movingState.rotation.y,
+                            this.state.movingState.rotation.z,
+                            this.state.movingState.center.x,
+                            this.state.movingState.center.y,
+                            this.state.movingState.center.z,
+                            this.state.movingState.scale.x,
+                            this.state.movingState.scale.y,
+                            this.state.movingState.scale.z
+                           ]}
+                      moving_coords = {this.state.moving_coords}
+                      fixed_coords = {this.state.fixed_coords}
+                      radius={ 5 }
+                      cameraState={this.state.pcCameraState}
+                      movingState={this.state.movingState}
+                      onCameraChange={ state=>this.onPCCameraChange(state) }
+                      ref={ this.pcv } />
+                  </Tab>
+                </Tabs>
               </div>
             </div>
           </div>

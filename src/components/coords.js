@@ -1,25 +1,25 @@
 import React from 'react'
 import Dropzone from 'react-dropzone'
 import PropTypes from 'prop-types'
+import Button from 'react-bootstrap/Button'
 
 var defaultOnCoords = (data) => {}
 
 export class Coords extends React.Component {
   render() {
     return (
-      <button>
+      <Button variant="primary">
       <Dropzone onDrop={acceptedFiles=> this.onDrop(acceptedFiles)}>
       {({getRootProps, getInputProps}) => (
           <section>
             <div {...getRootProps()}>
               <input {...getInputProps()} />
-              Drop {this.props.name} coordinates file here or click to pick
-              files
+              Set {this.props.name} coordinates
             </div>
           </section>
         )}
       </Dropzone>
-      </button>
+    </Button>
   )
   }
   onDrop(acceptedFiles) {

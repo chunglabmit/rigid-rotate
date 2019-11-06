@@ -45,7 +45,12 @@ export class PointCloudViewer extends React.Component {
       this.props.cameraState.rotation.y,
       this.props.cameraState.rotation.z
     )
-    this.renderer = new THREE.WebGLRenderer();
+    var canvas = document.createElement('canvas')
+    var context = canvas.getContext('webgl2', {alpha:true})
+    this.renderer = new THREE.WebGLRenderer({
+      canvas:canvas,
+      context: context
+    });
     this.mount.appendChild( this.renderer.domElement );
     this.renderer.setSize(width, height);
     this.controls = new TrackballControls(
