@@ -8,6 +8,7 @@ import {PointCloudViewer} from './components/pointcloud_viewer'
 import {VolumeViewer} from './components/volumeviewer'
 import {Transform} from './components/transform'
 import {UrlButton} from './components/url'
+import {CLim} from './components/clim'
 
 export default class App extends React.Component {
   constructor() {
@@ -22,7 +23,13 @@ export default class App extends React.Component {
       movingState: PointCloudViewer.defaultProps.movingState,
       selectedTab: 0,
       movingURL: VolumeViewer.defaultProps.movingURL,
-      fixedURL: VolumeViewer.defaultProps.fixedURL
+      fixedURL: VolumeViewer.defaultProps.fixedURL,
+      climFixedMin: VolumeViewer.defaultProps.climFixedMin,
+      climFixedMax: VolumeViewer.defaultProps.climFixedMax,
+      fixedAlphaTest: VolumeViewer.defaultProps.fixedAlphaTest,
+      climMovingMin: VolumeViewer.defaultProps.climMovingMin,
+      climMovingMax: VolumeViewer.defaultProps.climMovingMax,
+      movingAlphaTest: VolumeViewer.defaultProps.movingAlphaTest
     }
   }
 
@@ -35,7 +42,13 @@ export default class App extends React.Component {
       movingState:this.state.movingState,
       selectedTab:this.state.selectedTab,
       movingURL:this.state.movingURL,
-      fixedURL:this.state.fixedURL
+      fixedURL:this.state.fixedURL,
+      climFixedMin: this.state.climFixedMin,
+      climFixedMax: this.state.climFixedMax,
+      fixedAlphaTest: this.state.fixedAlphaTest,
+      climMovingMin: this.state.climMovingMin,
+      climMovingMax: this.state.climMovingMax,
+      movingAlphaTest: this.state.movingAlphaTest
     }
     state[key] = value
     this.setState(state)
@@ -120,12 +133,50 @@ export default class App extends React.Component {
           </nav>
           <div class="container-fluid">
             <div class="row">
-              <div class="col-sm-4 col-md-3 col-lg-2">
-                <Transform
-                  transform={ this.state.movingState }
-                  onChange={ state=>this.onMovingChange(state)} />
+              <div class="col-sm-5 col-md-4 col-lg-3">
+                <div class="container-fluid">
+                  <div class="row">
+                    <Transform
+                      transform={ this.state.movingState }
+                      onChange={ state=>this.onMovingChange(state)} />
+                  </div>
+                  <div class="row">
+                    <CLim
+                      name="fixed"
+                      min={this.state.climFixedMin}
+                      max={this.state.climFixedMax}
+                      alphaTest={this.state.fixedAlphaTest}
+                      onMinChange={
+                        value=>this.changeState("climFixedMin", value)
+                      }
+                      onMaxChange={
+                        value=>this.changeState("climFixedMax", value)
+                      }
+                      onAlphaTestChange={
+                        value=>this.changeState("fixedAlphaTest", value)
+                      }
+                      />
+                  </div>
+                  <div class="row">
+                    <CLim
+                      name="moving"
+                      min={this.state.climMovingMin}
+                      max={this.state.climMovingMax}
+                      alphaTest={this.state.movingAlphaTest}
+                      onMinChange={
+                        value=>this.changeState("climMovingMin", value)
+                      }
+                      onMaxChange={
+                        value=>this.changeState("climMovingMax", value)
+                      }
+                      onAlphaTestChange={
+                        value=>this.changeState("movingAlphaTest", value)
+                      }
+                      />
+                  </div>
+                </div>
               </div>
-              <div class="col-sm-8 col-md-9 col-lg-10">
+              <div class="col-sm-7 col-md-8 col-lg-9">
                 <Tabs
                   onSelect={ (tab) => this.onTabChange(tab)}
                   selected={ this.state.selectedTab}>
@@ -145,8 +196,20 @@ export default class App extends React.Component {
                         this.state.movingState.scale.y,
                         this.state.movingState.scale.z,
                         this.state.movingURL,
-                        this.state.fixedURL
+                        this.state.fixedURL,
+                        this.state.climFixedMin,
+                        this.state.climFixedMax,
+                        this.state.climMovingMin,
+                        this.state.climMovingMax,
+                        this.state.fixedAlphaTest,
+                        this.state.movingAlphaTest
                       ]}
+                      fixedClimMin={this.state.climFixedMin}
+                      fixedClimMax={this.state.climFixedMax}
+                      fixedAlphaTest={this.state.fixedAlphaTest}
+                      movingClimMin={this.state.climMovingMin}
+                      movingClimMax={this.state.climMovingMax}
+                      movingAlphaTest={this.state.movingAlphaTest}
                       fixedURL={this.state.fixedURL}
                       movingURL={this.state.movingURL}
                       cameraState={this.state.volCameraState}

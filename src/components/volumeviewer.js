@@ -90,8 +90,9 @@ export class VolumeViewer extends React.Component {
     this.fixed_group.name = "FixedCoordinates";
     this.loadVolume(this.props.fixedURL,
                     this.props.fixed_colormap_file,
-                    this.props.fixed_clim_min,
-                    this.props.fixed_clim_max,
+                    this.props.fixedClimMin,
+                    this.props.fixedClimMax,
+                    this.props.fixedAlphaTest,
                     this.fixed_group)
     if (true) {
       this.moving_frame_group = new THREE.Group();
@@ -99,8 +100,9 @@ export class VolumeViewer extends React.Component {
       this.moving_group = new THREE.Group();
       this.loadVolume(this.props.movingURL,
                       this.props.moving_colormap_file,
-                      this.props.moving_clim_min,
-                      this.props.moving_clim_max,
+                      this.props.movingClimMin,
+                      this.props.movingClimMax,
+                      this.props.movingAlphaTest,
                       this.moving_group)
       this.moving_group.name = "MovingCoordinates";
       this.moving_rotate_group.add(this.moving_group)
@@ -172,7 +174,7 @@ export class VolumeViewer extends React.Component {
     this.renderer.render(this.scene, this.camera);
   }
 
-  loadVolume(url, colormap_file, clim_min, clim_max, group) {
+  loadVolume(url, colormap_file, climMin, climMax, alphaTest, group) {
     new THREE.TextureLoader().load(colormap_file,
     (cm) => {
       const key = [url, this.props.level]
@@ -200,15 +202,17 @@ export class VolumeViewer extends React.Component {
             (volume)=> {
               VOLUME[key] = volume
               LEVEL[key] = level
-              group.add(this.makeMesh(volume, cm, clim_min, clim_max, level))
+              group.add(this.makeMesh(volume, cm, climMin, climMax, alphaTest,
+                        level))
             })
         })
       } else {
-        group.add(this.makeMesh(VOLUME[key], cm, clim_min, clim_max, LEVEL[key]))
+        group.add(this.makeMesh(VOLUME[key], cm, climMin, climMax, alphaTest,
+                  LEVEL[key]))
       }
     })
   }
-  makeMesh(volume, cm, clim_min, clim_max, level) {
+  makeMesh(volume, cm, climMin, climMax, alphaTest, level) {
     var texture = new THREE.DataTexture3D(
       volume.data, volume.xLength, volume.yLength, volume.zLength)
     texture.format = THREE.RedFormat
@@ -219,11 +223,11 @@ export class VolumeViewer extends React.Component {
     var uniforms = THREE.UniformsUtils.clone( shader.uniforms );
     uniforms[ "u_data" ].value = texture;
     uniforms[ "u_size" ].value.set( volume.xLength, volume.yLength, volume.zLength );
-    uniforms[ "u_clim" ].value.set( clim_min, clim_max );
+    uniforms[ "u_clim" ].value.set( climMin, climMax );
     uniforms[ "u_renderstyle" ].value = 0
     uniforms[ "u_cmdata"].value = cm
     var material = new THREE.ShaderMaterial( {
-      alphaTest: .5,
+      alphaTest: alphaTest,
       uniforms: uniforms,
       transparent: true,
       blending: THREE.NormalBlending,
@@ -265,10 +269,12 @@ VolumeViewer.propTypes = {
   movingURL:PropTypes.string,
   fixed_colormap_file:PropTypes.string,
   moving_colormap:PropTypes.string,
-  fixed_clim_min:PropTypes.number,
-  fixed_clim_max:PropTypes.number,
-  moving_clim_min:PropTypes.number,
-  moving_clim_max:PropTypes.number,
+  fixedClimMin:PropTypes.number,
+  fixedClimMax:PropTypes.number,
+  fixedAlphaTest:PropTypes.number,
+  movingClimMin:PropTypes.number,
+  movingClimMax:PropTypes.number,
+  movingAlphaTest:PropTypes.number,
   level:PropTypes.number,
   movingState:PropTypes.object,
   cameraState:PropTypes.object,
@@ -280,10 +286,12 @@ VolumeViewer.defaultProps = {
     fixed_colormap_file:"textures/cm_red.png",
     moving_colormap_file:"textures/cm_green.png",
     level: 3,
-    fixed_clim_min: 0,
-    fixed_clim_max: 4000,
-    moving_clim_min: 0,
-    moving_clim_max: 4000,
+    fixedClimMin: 0,
+    fixedClimMax: 4000,
+    fixedAlphaTest: .5,
+    movingClimMin: 0,
+    movingClimMax: 4000,
+    movingAlphaTest: .5,
     movingState:{
       offset: {
         x: 0,

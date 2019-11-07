@@ -33,53 +33,55 @@ class Triple extends React.Component {
   }
   render() {
     return(
-      <div class="row">
-        <div class="col-sm-12 col-md-12 col-lg-12">
-          <div class="card">
-            <div class="card-body">
-              <div class="card-title"> {this.props.name} </div>
-                <div class="container-fluid">
-                  <form>
-                    <div class="form-group form-inline">
-                      <label
-                       htmlFor={ this.props.name + "X"}
-                       >X:</label>&nbsp;
-                      <input
-                        class="form-control"
-                        type="text"
-                        size="2"
-                        name={ this.props.name + "X"}
-                        value={this.state.xtext }
-                        onChange={ event=>this.handleChange(event, "x")}/>
-                    </div>
-                    <div class="form-group form-inline">
-                      <label
-                       htmlFor={ this.props.name + "Y"}
-                       >Y:</label>&nbsp;
-                      <input
-                        class="form-control"
-                        type="text"
-                        size="2"
-                        name={ this.props.name + "Y"}
-                        value={this.state.ytext }
-                        onChange={ event=>this.handleChange(event, "y")}/>
-                    </div>
-                    <div class="form-group form-inline">
-                      <label
-                       htmlFor={ this.props.name + "Z"}
-                       >Z:</label>&nbsp;
-                      <input
-                        class="form-control"
-                        type="text"
-                        size="2"
-                        name={ this.props.name + "Z"}
-                        value={this.state.ztext }
-                        onChange={ event=>this.handleChange(event, "z")}/>
-                    </div>
-                  </form>
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-sm-12 col-md-12 col-lg-12">
+            <div class="card">
+              <div class="card-body">
+                <div class="card-title"> {this.props.name} </div>
+                  <div class="container-fluid">
+                    <form>
+                      <div class="form-group form-inline">
+                        <label
+                         htmlFor={ this.props.name + "X"}
+                         >X:</label>&nbsp;
+                        <input
+                          class="form-control"
+                          type="text"
+                          size="2"
+                          name={ this.props.name + "X"}
+                          value={this.state.xtext }
+                          onChange={ event=>this.handleChange(event, "x")}/>
+                      </div>
+                      <div class="form-group form-inline">
+                        <label
+                         htmlFor={ this.props.name + "Y"}
+                         >Y:</label>&nbsp;
+                        <input
+                          class="form-control"
+                          type="text"
+                          size="2"
+                          name={ this.props.name + "Y"}
+                          value={this.state.ytext }
+                          onChange={ event=>this.handleChange(event, "y")}/>
+                      </div>
+                      <div class="form-group form-inline">
+                        <label
+                         htmlFor={ this.props.name + "Z"}
+                         >Z:</label>&nbsp;
+                        <input
+                          class="form-control"
+                          type="text"
+                          size="2"
+                          name={ this.props.name + "Z"}
+                          value={this.state.ztext }
+                          onChange={ event=>this.handleChange(event, "z")}/>
+                      </div>
+                    </form>
+                  </div>
                 </div>
               </div>
-            </div>
+          </div>
         </div>
       </div>
     )
@@ -136,36 +138,47 @@ export class Transform extends React.Component {
   render() {
     return(
       <div class="container-fluid small">
-        <Triple
-         name="offset"
-         x = { this.props.transform.offset.x }
-         y = { this.props.transform.offset.y }
-         z = { this.props.transform.offset.z }
-         onChange = { state => this.handleChange(state, "offset") }
-         />
-        <Triple
-          name="center"
-          x = { this.props.transform.center.x }
-          y = { this.props.transform.center.y }
-          z = { this.props.transform.center.z }
-          onChange = { state => this.handleChange(state, "center")}
-        />
-        <Triple
-          name="rotation"
-          x = { this.props.transform.rotation.x }
-          y = { this.props.transform.rotation.y }
-          z = { this.props.transform.rotation.z }
-          multiplier = { 180 / 3.1415926 }
-          onChange = { state=>this.handleChange(state, "rotation")}
-        />
-        <Triple
-          name="scale"
-          x = { this.props.transform.scale.x }
-          y = { this.props.transform.scale.y }
-          z = { this.props.transform.scale.z }
-          onChange = { state=>this.handleChange(state, "scale")}
-        />
-
+        <div class="row">
+          <div class="col-sm-6 col-md-6 col-lg-6">
+            <Triple
+             name="offset"
+             x = { this.props.transform.offset.x }
+             y = { this.props.transform.offset.y }
+             z = { this.props.transform.offset.z }
+             onChange = { state => this.handleChange(state, "offset") }
+             />
+           </div>
+           <div class="col-sm-6 col-md-6 col-lg-6">
+            <Triple
+              name="center"
+              x = { this.props.transform.center.x }
+              y = { this.props.transform.center.y }
+              z = { this.props.transform.center.z }
+              onChange = { state => this.handleChange(state, "center")}
+            />
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-6 col-md-6 col-lg-6">
+            <Triple
+              name="rotation"
+              x = { this.props.transform.rotation.x }
+              y = { this.props.transform.rotation.y }
+              z = { this.props.transform.rotation.z }
+              multiplier = { 180 / 3.1415926 }
+              onChange = { state=>this.handleChange(state, "rotation")}
+            />
+          </div>
+          <div class="col-sm-6 col-md-6 col-lg-6">
+            <Triple
+              name="scale"
+              x = { this.props.transform.scale.x }
+              y = { this.props.transform.scale.y }
+              z = { this.props.transform.scale.z }
+              onChange = { state=>this.handleChange(state, "scale")}
+            />
+          </div>
+        </div>
       </div>
     )
   }
