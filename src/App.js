@@ -135,12 +135,12 @@ export default class App extends React.Component {
             <div class="row">
               <div class="col-sm-5 col-md-4 col-lg-3">
                 <div class="container-fluid">
-                  <div class="row">
+                  <div class="row no-gutters">
                     <Transform
                       transform={ this.state.movingState }
                       onChange={ state=>this.onMovingChange(state)} />
                   </div>
-                  <div class="row">
+                  <div class="row no-gutters">
                     <CLim
                       name="fixed"
                       min={this.state.climFixedMin}
@@ -157,7 +157,7 @@ export default class App extends React.Component {
                       }
                       />
                   </div>
-                  <div class="row">
+                  <div class="row no-gutters">
                     <CLim
                       name="moving"
                       min={this.state.climMovingMin}
@@ -176,7 +176,7 @@ export default class App extends React.Component {
                   </div>
                 </div>
               </div>
-              <div class="col-sm-7 col-md-8 col-lg-9">
+              <div class="col col-sm-7 col-md-8 col-lg-9">
                 <Tabs
                   onSelect={ (tab) => this.onTabChange(tab)}
                   selected={ this.state.selectedTab}>

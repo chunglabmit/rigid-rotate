@@ -4,8 +4,8 @@ export class CLim extends React.Component {
   render() {
     return (
       <div class="card small">
+        <div class="card-header">{this.props.name} brightness</div>
         <div class="card-body">
-          <div class="card-title"> {this.props.name} brightness</div>
           <div class="container-fluid">
             <form>
               <div class="form-group form-inline">
@@ -17,7 +17,8 @@ export class CLim extends React.Component {
                  min="0"
                  max="16384"
                  value={this.props.min}
-                 onChange={ (event)=>this.props.onMinChange(event.target.value)}
+                 onChange={ (event)=>this.props.onMinChange(
+                   parseFloat(event.target.value))}
                  />
               </div>
               <div class="form-group form-inline">
@@ -29,7 +30,8 @@ export class CLim extends React.Component {
                  min="0"
                  max="16384"
                  value={this.props.max}
-                 onChange={(event)=>this.props.onMaxChange(event.target.value)}
+                 onChange={(event)=>this.props.onMaxChange(
+                   parseFloat(event.target.value))}
                  />
               </div>
               <div class="form-group form-inline">
@@ -42,7 +44,8 @@ export class CLim extends React.Component {
                  max="1"
                  step=".05"
                  value={this.props.alphaTest}
-                 onChange={(event)=>this.props.onAlphaTestChange(event.target.value)}
+                 onChange={(event)=>this.props.onAlphaTestChange(
+                   parseFloat(event.target.value))}
                  />
               </div>
             </form>

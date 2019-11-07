@@ -35,52 +35,52 @@ class Triple extends React.Component {
     return(
       <div class="container-fluid">
         <div class="row">
-          <div class="col-sm-12 col-md-12 col-lg-12">
-            <div class="card">
-              <div class="card-body">
-                <div class="card-title"> {this.props.name} </div>
-                  <div class="container-fluid">
-                    <form>
-                      <div class="form-group form-inline">
-                        <label
-                         htmlFor={ this.props.name + "X"}
-                         >X:</label>&nbsp;
-                        <input
-                          class="form-control"
-                          type="text"
-                          size="2"
-                          name={ this.props.name + "X"}
-                          value={this.state.xtext }
-                          onChange={ event=>this.handleChange(event, "x")}/>
-                      </div>
-                      <div class="form-group form-inline">
-                        <label
-                         htmlFor={ this.props.name + "Y"}
-                         >Y:</label>&nbsp;
-                        <input
-                          class="form-control"
-                          type="text"
-                          size="2"
-                          name={ this.props.name + "Y"}
-                          value={this.state.ytext }
-                          onChange={ event=>this.handleChange(event, "y")}/>
-                      </div>
-                      <div class="form-group form-inline">
-                        <label
-                         htmlFor={ this.props.name + "Z"}
-                         >Z:</label>&nbsp;
-                        <input
-                          class="form-control"
-                          type="text"
-                          size="2"
-                          name={ this.props.name + "Z"}
-                          value={this.state.ztext }
-                          onChange={ event=>this.handleChange(event, "z")}/>
-                      </div>
-                    </form>
+          <div class="card">
+            <div class="card-header">
+              {this.props.name}
+            </div>
+            <div class="card-body">
+              <div class="container-fluid">
+                <form>
+                  <div class="form-group form-inline">
+                    <label
+                     htmlFor={ this.props.name + "X"}
+                     >X:</label>&nbsp;
+                    <input
+                      class="form-control"
+                      type="text"
+                      size="2"
+                      name={ this.props.name + "X"}
+                      value={this.state.xtext }
+                      onChange={ event=>this.handleChange(event, "x")}/>
                   </div>
-                </div>
+                  <div class="form-group form-inline">
+                    <label
+                     htmlFor={ this.props.name + "Y"}
+                     >Y:</label>&nbsp;
+                    <input
+                      class="form-control"
+                      type="text"
+                      size="2"
+                      name={ this.props.name + "Y"}
+                      value={this.state.ytext }
+                      onChange={ event=>this.handleChange(event, "y")}/>
+                  </div>
+                  <div class="form-group form-inline">
+                    <label
+                     htmlFor={ this.props.name + "Z"}
+                     >Z:</label>&nbsp;
+                    <input
+                      class="form-control"
+                      type="text"
+                      size="2"
+                      name={ this.props.name + "Z"}
+                      value={this.state.ztext }
+                      onChange={ event=>this.handleChange(event, "z")}/>
+                  </div>
+                </form>
               </div>
+            </div>
           </div>
         </div>
       </div>
@@ -137,8 +137,8 @@ export class Transform extends React.Component {
   }
   render() {
     return(
-      <div class="container-fluid small">
-        <div class="row">
+      <div class="container-fluid small mx-0 my-0 px-0 py-0">
+        <div class="row no-gutters">
           <div class="col-sm-6 col-md-6 col-lg-6">
             <Triple
              name="offset"
@@ -158,7 +158,7 @@ export class Transform extends React.Component {
             />
           </div>
         </div>
-        <div class="row">
+        <div class="row no-gutters">
           <div class="col-sm-6 col-md-6 col-lg-6">
             <Triple
               name="rotation"

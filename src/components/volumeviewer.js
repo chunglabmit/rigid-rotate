@@ -187,7 +187,7 @@ export class VolumeViewer extends React.Component {
                tentativeLevel <=pcvolume.scales.length;
                tentativeLevel++) {
               scale = pcvolume.scales[tentativeLevel-1]
-            if (scale.xs() * scale.ys() * scale.zs() < 50000000) {
+            if (scale.xs() * scale.ys() * scale.zs() < 10000000) {
               break
             }
           }
@@ -233,6 +233,8 @@ export class VolumeViewer extends React.Component {
       blending: THREE.NormalBlending,
       vertexShader: shader.vertexShader,
       fragmentShader: shader.fragmentShader,
+      transparent: true,
+      opacity: alphaTest,
       side: THREE.BackSide // The volume shader uses the backface as its "reference point"
     } );
     // THREE.Mesh
